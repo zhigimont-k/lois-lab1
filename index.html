@@ -7,17 +7,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Лабораторная работа №1</h1>
+<h1>Лабораторная работа №1 (А4)</h1>
 <div id="task"><p>
     A. Подсчитать количество подформул в формуле логики высказываний.<br>
-    B. Проверить является ли строка формулой логики высказываний.<br>
-    C. Проверить является ли формула СКНФ.<br>
-    D. Проверить является ли формула СДНФ<br></p>
+    4. Проверить является ли формула нейтральной.<br></p>
 </div>
-<div id="inputField">
-    Введите формулу: <input type="text" name="input" id="input"><br>
-    <button type="button" onclick="generateFormula()">Generate formula</button>
-    <button type="button" onclick="run()">Run</button>
+    Формула: <input type="text" name="formula" id="formula"><br>
+
+</div><br>
+<div id = "answerField">
+    Количество подформул в формуле: <input type="text" name="subFormulaNumber" id="subFormulaNumber"><br>
+    Является ли формула нейтральной? <br>
+    <input type="radio" id = "neutral" name = "neutral" value = "true" > Да<br>
+    <input type="radio" id = "not-neutral" name = "neutral" value = "false" > Нет<br>
+    <button type="button" onclick="run()">Ответить</button>
 </div>
 <div id="outputField">
 
