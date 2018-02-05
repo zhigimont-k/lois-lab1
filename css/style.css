@@ -1,0 +1,61 @@
+html {
+    height: 100%;
+}
+
+body {
+    /*background-color: lightblue;*/
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    text-align: center;
+    /*background: linear-gradient(to right, #22c1c3, #fdbb2d);*/
+    background: linear-gradient(to right, #43C6AC, #F8FFAE);
+}
+
+h1 {
+    font-family: 'Francois One', sans-serif;
+    color: white;
+}
+
+p {
+    font-family: 'Francois One', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+#formula-div {
+    font-family: 'Amatic SC', cursive;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 150px;
+    width: 50%;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+#neutral {
+    font-family: 'Francois One', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+.btn {
+    border: 2px solid black;
+    background-color: transparent;
+    /*color: black;*/
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Francois One', sans-serif;
+}
+
+.check {
+    border-color: white;
+    color: white;
+}
+
+.check:hover {
+    background-color: rgba(248, 255, 174, 0.5);
+    color: white;
+}

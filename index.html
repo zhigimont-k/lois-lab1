@@ -2,25 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Лабораторная работа №1 по ЛОИС</title>
+    <title>LOIS lab №1</title>
     <script src="js/function.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
 </head>
 <body>
-<h1>Лабораторная работа №1 (А4)</h1>
+<h1>Lab #1 (A4)</h1>
 <div id="task"><p>
-    A. Подсчитать количество подформул в формуле логики высказываний.<br>
-    4. Проверить является ли формула нейтральной.<br></p>
+    A. Count subformulas in a formula.<br>
+    4. Check if the formula is neutral.<br></p>
 </div>
-    Формула: <input type="text" name="formula" id="formula"><br>
+<div id="formula-div">
+    <p>Formula:</p> <input type="text" name="formula" id="formula"><br>
 
-</div><br>
-<div id = "answerField">
-    Количество подформул в формуле: <input type="text" name="subFormulaNumber" id="subFormulaNumber"><br>
-    Является ли формула нейтральной? <br>
-    <input type="radio" id = "neutral" name = "neutral" value = "true" > Да<br>
-    <input type="radio" id = "not-neutral" name = "neutral" value = "false" > Нет<br>
-    <button type="button" onclick="run()">Ответить</button>
+</div>
+<br>
+<div id="answerField">
+    <p>Number of subformulas:</p> <input type="text" name="subFormulaNumber" id="subFormulaNumber"><br>
+    <p>Is formula neutral?
+        <input type="radio" id="neutral" name="neutral" value="true">Yes
+        <input type="radio" id="not-neutral" name="neutral" value="false">No<br></p>
+    <button class="btn check" onclick="run()">Check answer</button>
 </div>
 <div id="outputField">
 

@@ -25,15 +25,15 @@ function getNumberOfSubformulas() {
     var letters = [];
     for (var i = 0; i < formula.length; i++) {
         var letter = formula.charAt(i);
-        var regexp = new RegExp("[A-Z]");
+        var regexp = new RegExp("[A-Z0-1]");
         if (letter == "(") {
             subformulas++;
         }
-        if (regexp.test(letter)){
+        if (regexp.test(letter)) {
             letters.push(letter);
         }
     }
-    if (letters.length == 1){
+    if (letters.length == 1) {
         subformulas = 1;
     } else {
         subformulas += getUniqueArray(letters).length;
@@ -42,8 +42,10 @@ function getNumberOfSubformulas() {
 }
 
 //возвращает массив из уникальных символов подаваемого массива
-function getUniqueArray(array){
-    return array.filter(function(item, index, ar){return ar.indexOf(item) === index;});
+function getUniqueArray(array) {
+    return array.filter(function (item, index, ar) {
+        return ar.indexOf(item) === index;
+    });
 }
 
 //проверяет, является ли формула нейтральной
@@ -73,6 +75,6 @@ function checkAnswer() {
 
 }
 
-function showResult(){
+function showResult() {
 
 }
