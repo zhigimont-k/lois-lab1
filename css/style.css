@@ -19,10 +19,23 @@ h1, p, #neutral {
 #formula-div {
     font-family: 'Francois One', sans-serif;
     display: block;
+	background: rgba(210, 180, 222, 0.2);
     margin-left: auto;
     margin-right: auto;
     height: 150px;
-    width: 50%;
+    width: 30%;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+#answerForm {
+    font-family: 'Francois One', sans-serif;
+    display: block;
+	background: rgba(210, 180, 222, 0.2);
+    margin-left: auto;
+    margin-right: auto;
+    height: 150px;
+    width: 30%;
     border: 1px solid white;
     border-radius: 10px;
 }

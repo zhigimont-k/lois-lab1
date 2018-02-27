@@ -7,6 +7,14 @@ var isNeutralAnswer = false;
 var table = [];
 var subformulaCount = 0;
 
+var unaryOrBinaryComplexFormula = new RegExp('([(][!]([A-Z]|[0-1])[)])|([(]([A-Z]|[0-1])((&)|(\\|)|(->)|(~))([A-Z]|[0-1])[)])', 'g');
+var atomOrConstant = new RegExp('([A-Z]|[a-z]|[0-1])', 'g');
+var RegExpFormula = new RegExp('([(][!]([A-Z]|[a-z]|[0-1])[)])|([(]([A-Z]|[a-z]|[0-1])((&)|(\\|)|(->)|(~))([A-Z]|[a-z]|[0-1])[)])', 'g');
+var atomarExp = new RegExp('([A-Z]|[a-z]|[0-1])', 'g');
+var replaceFormula = "F";
+var result;
+var tempFormula;
+
 //основной алгоритм
 function run() {
     clear();
@@ -22,38 +30,33 @@ function run() {
 }
 
 //получение числа подформул
-function getNumberOfSubformulas() {
-    var subformulas = 0;
-    var letters = [];
-    for (var i = 0; i < formula.length; i++) {
-        var letter = formula.charAt(i);
-        var regexp = new RegExp("[A-Za-z0-1]");
-        if (letter == "(") {
-            subformulas++;
-        }
-        if (regexp.test(letter)) {
-            letters.push(letter);
-        }
+function getNumberOfSubformulas() {	
+	var formulaCpy = formula;
+    result = formulaCpy.match(atomOrConstant, 'g');
+	if (formulaCpy.match(atomarExp, 'g')){
+		return 1;
+	}
+    while (formulaCpy != tempFormula) {
+        tempFormula = formulaCpy;
+        result.push(formulaCpy.match(unaryOrBinaryComplexFormula, 'g'));
+        formulaCpy = formulaCpy.replace(unaryOrBinaryComplexFormula, replaceFormula);
     }
-    if (letters.length == 1) {
-        subformulas = 1;
-    } else {
-        subformulas += getUniqueArray(letters).length;
-    }
-    return subformulas;
-}
-
-//возвращает массив из уникальных символов подаваемого массива
-function getUniqueArray(array) {
-    return array.filter(function (item, index, ar) {
-        return ar.indexOf(item) === index;
-    });
-}
-
-//проверяет, является ли формула нейтральной
-function isNeutral(formula) {
-
-    return true;
+    result = result.join(',');
+    result = result.split(',');
+    for (var i = 0; i < result.length; i++){
+        for (var j = i + 1; j < result.length;){
+            if (result[i] == result[j]) {
+				result.splice(j, 1);
+			} else {
+				j++;
+			}
+		}
+	}
+	alert(result);
+	if (result.match(atomOrConstant, 'g')){
+		return 1;
+	}
+    return result.length - 1;
 }
 
 //проверка формулы на корректность
@@ -63,12 +66,6 @@ function isFormula() {
         return false;
     }
     return true;
-}
-
-function fillTruthTable(){
-    for (var i = 0; i < subformulaCount; i++){
-        table[i] = [];
-    }
 }
 
 //сброс
@@ -88,30 +85,29 @@ function checkAnswer() {
         document.getElementById("output-field").innerHTML = "<p>You got subformula number wrong, the correct answer is "
             +subformulaCount+".</p>";
     }
-}
-
-function showResult() {
-
+	
+	if ( isNeutralAnswer == isNeutral()){
+        document.getElementById("output-field").innerHTML += "<p>Neutrality answer is correct!</p>";
+    } else {
+        document.getElementById("output-field").innerHTML += "<p>You got neutrality answer wrong.</p>";
+    }
 }
 
 //валидация введённой формулы
 function isFormula(){
-	var RegExpFormula = new RegExp('([(][!]([A-Z]|[a-z]|[0-1])[)])|([(]([A-Z]|[a-z]|[0-1])((&)|(\\|)|(->)|(~))([A-Z]|[a-z]|[0-1])[)])', 'g');
-	var atomarExp = new RegExp('([A-Z]|[a-z]|[0-1])', 'g');
-	var replaceFormula = "F";
 	var result;
 	var tempFormula;
 	var formulaClone = formula;
-
+	
 	while (formulaClone != tempFormula ) {
 			tempFormula = formulaClone;
 			formulaClone = formulaClone.replace(RegExpFormula, replaceFormula);
-			}
+	}
 	  
     tempFormula=0;  
-    var resultType = formulaClone.match(new RegExp(atomarExp, 'g'));
-    if ((formulaClone.length == 1) && (resultType != null) && (resultType.length == 1)) {
-        return true;
-    } 
-	return false;
+    var resultType = formulaClone.match(atomarExp, 'g');
+	if ((formulaClone.length == 1) && (resultType != null) && (resultType.length == 1)){
+		return true;
+	}
+    return false;
 }
