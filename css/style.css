@@ -28,6 +28,14 @@ h1, p, #neutral {
     border-radius: 10px;
 }
 
+#correct-answer{
+    color: green;
+}
+
+#wrong-answer{
+    color: red;
+}
+
 #answerForm {
     font-family: 'Francois One', sans-serif;
     display: block;

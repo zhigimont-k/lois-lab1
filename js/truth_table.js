@@ -12,13 +12,14 @@ var countZero = 0;
 var n;
 
 function getAnswerTypeFormula() {
+	var res = "";
   if (countAnswer == n | countZero==n) {
-    countAnswer = 0;
-      return "Данная формула не является нейтральной";
+      res = "Данная формула не является нейтральной";
    } else {
-     countAnswer = 0;
-      return "Данная формула является нейтральной";
+      res = "Данная формула является нейтральной";
    }
+    countAnswer = 0;
+	return res;
 }
 
 function isNeutral() {
@@ -52,8 +53,6 @@ function getTableTruth(formula){
         var tempObject = getConstantForSymbol(symbolInFormula, currentNumber);
         tempObject[ANSWER] = getAnswer(formula, tempObject);
         table[i] = tempObject;
-            
-
           if (tempObject[ANSWER] == 1) {
             countAnswer++;
           }
@@ -91,7 +90,6 @@ function getConstantForSymbol(symbolInFormula, currentNumber){
         var symbol = symbolInFormula[i];
         object[symbol] = currentNumber[i];
     }
-
     return object;
 }
 
@@ -113,95 +111,48 @@ function calculateFormula(formula){
         var result = calculateSimpleFormula(subFormula);
         formula = formula.replace(subFormula, result);
     }
-
     return formula;
 }
 
 function calculateSimpleFormula(formula){
     if (formula.indexOf(NEGATION) > -1){
-        return findNEGATION(formula);
+        return calculateNegation(formula);
     } else if (formula.indexOf(CONJUNCTION) > -1){
-        return findCONJUNCTION(formula);
+        return calculateConjunction(formula);
     } else if (formula.indexOf(DISJUNCTION) > -1){
-        return findDISJUNCTION(formula);
+        return calculateDisjunction(formula);
     } else if (formula.indexOf(IMPLICATION) > -1){
-        return findIMPLICATION(formula);
+        return calculateImplication(formula);
     } else if (formula.indexOf(EQUIVALENCE) > -1){
-        return findEQUIVALENCE(formula);
+        return calculateEquivalence(formula);
     }
 }
 
-function findNEGATION(formula) {
-
+function calculateNegation(formula) {
     var number = parseInt(formula[2]);
-    if (!number) {
-      return 1;
-    } else {
-      return 0;
-    }
+	return Number(!number);
 }
 
-function findCONJUNCTION(formula) {
-
+function calculateConjunction(formula) {
     var firstValue = parseInt(formula[1]);
     var secondValue = parseInt(formula[3]);
-    if (firstValue&&secondValue) {
-      return 1;
-    } else {
-      return 0;
-    }
+	return Number(firstValue&&secondValue);
 }
 
-function findDISJUNCTION(formula) {
+function calculateDisjunction(formula) {
     var firstValue = parseInt(formula[1]);
     var secondValue = parseInt(formula[3]);
-    if (firstValue||secondValue) {
-      return 1;
-    } else {
-      return 0;
-    }
+	return Number(firstValue || secondValue);
 }
 
-function findIMPLICATION(formula) {
-
+function calculateImplication(formula) {
     var firstValue = parseInt(formula[1]);
     var secondValue = parseInt(formula[4]);
-    if ((!firstValue)||secondValue) {
-      return 1;
-    } else {
-      return 0;
-    }
+	return Number((!firstValue)||secondValue);
 }
 
-function findEQUIVALENCE(formula) {
-
+function calculateEquivalence(formula) {
     var firstValue = parseInt(formula[1]);
     var secondValue = parseInt(formula[3]);
-    if (firstValue==secondValue) {
-      return 1;
-    } else {
-      return 0;
-    }
-}
-
-function objectToTable(tableG, unicsymbolSizeG){
-    var n = Math.pow(2, unicsymbolSizeG);
-    var innerHTML = "";
-    var tr = "<tr>";
-      for (var key of Object.keys(tableG[0])) {
-        tr += "<td>" + key + "</td>"
-      }
-      tr += "</tr>";
-        innerHTML += tr;
-          for (var i = 0; i < n; i++) {
-            var object = tableG[i];
-            var tr = "<tr>";
-              for (var key of Object.keys(object)) {
-                var val = object[key];
-                  tr += "<td>" + val + "</td>"
-              }
-        tr += "</tr>";
-        innerHTML += tr;
-    }
-    return innerHTML;
+	return Number(firstValue==secondValue);
 }
