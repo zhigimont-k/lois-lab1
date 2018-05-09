@@ -38,7 +38,6 @@ function run() {
     checkAnswer();
 }
 
-//calculates number of subformulas
 function getNumberOfSubformulas() {
     var formulaClone = formula;
     Formula = formula;
@@ -67,28 +66,23 @@ function checkAnswer() {
     }
 }
 
-/*Добавление найденной подформулы в список
- Проверяется наличие такой же формулы в списке, увеличивается число подформул
- */
-function addToSubFormuls(subFormuls) {
+//add subformula to subformula list if it's new
+function addToSubFormuls(subformula) {
     var firstTime = true;
     for (var i = 0; i < subformulaNumber; i++) {
-        if (subFormuls == subformulas[i]) firstTime = false;
+        if (subformula == subformulas[i]) firstTime = false;
     }
     if (firstTime) {
-        subformulas[subformulaNumber] = subFormuls;
+        subformulas[subformulaNumber] = subformula;
         for (var i = 0; i < 26; i++) {
-            if (subFormuls == SYMBOLS[i])
-                symbols[symbols.length] = subFormuls;
+            if (subformula == SYMBOLS[i])
+                symbols[symbols.length] = subformula;
         }
         subformulaNumber++;
     }
 }
 
-/* Поиск подформул в введенной формуле
- Сначала находятся все подформулы, представленные атомом/константой
- Потом остальные (унарная/бинарная формулы)
- */
+//search all subformulas in a formula
 function searchSubformuls(formula) {
 
     var result = formula.match(atomOrConstant, 'g');
