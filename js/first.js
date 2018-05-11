@@ -5,8 +5,6 @@ var formula = "";
 var subformulaAnswer = 0;
 var isNeutralAnswer = false;
 var subformulaCount = 0;
-var SYMBOLS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '0'];
-
 var RegExpFormula = new RegExp('([(][!]([A-Z]|[a-z]|[0-1])[)])|([(]([A-Z]|[a-z]|[0-1])((&)|(\\|)|(->)|(~))([A-Z]|[a-z]|[0-1])[)])', 'g');
 var atomarExp = new RegExp('([A-Z]|[a-z]|[0-1])', 'g');
 var unaryOrBinaryComplexSubformula = new RegExp('([(][!]([A-Z]+|[0-1])[)])|([(]([A-Z]+|[0-1])((&)|(\\|)|(->)|(~))([A-Z]+|[0-1])[)])', 'g');
@@ -22,6 +20,7 @@ var subformulas = [];
 var neutrality;
 
 //runs main algorithm
+//author: Жигимонт К., гр. 521702
 function run() {
     clear();
 
@@ -29,7 +28,7 @@ function run() {
     subformulas = [];
     formula = document.getElementById("formula").value;
     if (!isFormula(formula)) {
-        alert("Введённая формула некорректна");
+        alert("Please input a valid formula");
         return 0;
     }
     subformulaAnswer = document.getElementById("subFormulaNumber").value;
@@ -38,19 +37,22 @@ function run() {
     checkAnswer();
 }
 
+//author: Жигимонт К., гр. 521702
 function getNumberOfSubformulas() {
     var formulaClone = formula;
     Formula = formula;
-    searchSubformuls(formulaClone);
+    searchSubformulas(formulaClone);
     return subformulaNumber;
 }
 
+//author: Жигимонт К., гр. 521702
 function clear() {
     document.getElementById("formula").innerHTML = "";
     document.getElementById("output-field").innerHTML = "";
     formula = "";
 }
 
+//author: Жигимонт К., гр. 521702
 function checkAnswer() {
     if (subformulaCount == subformulaAnswer) {
         document.getElementById("output-field").innerHTML = "<p id='correct-answer'>Subformula number is correct!</p>";
@@ -67,29 +69,28 @@ function checkAnswer() {
 }
 
 //add subformula to subformula list if it's new
-function addToSubFormuls(subformula) {
+//author: Жигимонт К., гр. 521702
+function addToSubformulas(subformula) {
     var firstTime = true;
     for (var i = 0; i < subformulaNumber; i++) {
         if (subformula == subformulas[i]) firstTime = false;
     }
     if (firstTime) {
         subformulas[subformulaNumber] = subformula;
-        for (var i = 0; i < 26; i++) {
-            if (subformula == SYMBOLS[i])
-                symbols[symbols.length] = subformula;
+        if (subformula.length == 1 && subformula != "1" && subformula != "0"){
+            symbols[symbols.length] = subformula;
         }
         subformulaNumber++;
     }
 }
 
 //search all subformulas in a formula
-function searchSubformuls(formula) {
-
+//author: Жигимонт К., гр. 521702
+function searchSubformulas(formula) {
     var result = formula.match(atomOrConstant, 'g');
     for (var i = 0; i < result.length; i++) {
-        addToSubFormuls(result[i]);
+        addToSubformulas(result[i]);
     }
-
     while (formula !== tempFormula) {
         tempFormula = formula;
         result = formula.match(unaryOrBinaryComplexSubformula);
@@ -106,7 +107,7 @@ function searchSubformuls(formula) {
                     formula = formula + replaceFormula;
                 }
                 formula = formula + tempFormula.substring(beginIndex + endIndex, tempFormula.length);
-                addToSubFormuls(subFormula);
+                addToSubformulas(subFormula);
                 subFormula = "";
             }
         }
@@ -114,6 +115,7 @@ function searchSubformuls(formula) {
 }
 
 //check if the formula is correct
+//author: Жигимонт К., гр. 521702
 function isFormula() {
     var tempFormula;
     var formulaClone = formula;
